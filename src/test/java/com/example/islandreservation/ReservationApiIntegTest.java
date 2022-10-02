@@ -85,7 +85,7 @@ public class ReservationApiIntegTest {
                 LocalDate.parse("2021-02-12"), LocalDate.parse("2021-02-15"));
         ResponseEntity<String> createReservationResponse = template.postForEntity("/v1/reservation", createReservationRequest, String.class);
 
-        assertThat(createReservationResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(createReservationResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(createReservationResponse.getBody()).isNotEmpty();
 
         CreateReservationRequest createReservationRequest2 = new CreateReservationRequest("Michael Jonson", "michael@mail.com",
@@ -150,7 +150,7 @@ public class ReservationApiIntegTest {
                 CreateReservationRequest createReservationRequest = new CreateReservationRequest("John Smith", email,
                         LocalDate.parse("2021-10-01"), LocalDate.parse("2021-10-03"));
                 ResponseEntity<String> createReservationResponse = template.postForEntity("/v1/reservation", createReservationRequest, String.class);
-                if (createReservationResponse.getStatusCode() == HttpStatus.OK) {
+                if (createReservationResponse.getStatusCode() == HttpStatus.CREATED) {
                     okResponseCount.getAndIncrement();
                 } else if (createReservationResponse.getStatusCode() == HttpStatus.CONFLICT) {
                     conflictResponseCount.getAndIncrement();
@@ -167,7 +167,7 @@ public class ReservationApiIntegTest {
         CreateReservationRequest createReservationRequest = new CreateReservationRequest("John Smith", email,
                 LocalDate.parse(arrivalDate), LocalDate.parse(departureDate));
         ResponseEntity<String> createReservationResponse = template.postForEntity("/v1/reservation", createReservationRequest, String.class);
-        assertThat(createReservationResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(createReservationResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(createReservationResponse.getBody()).isNotEmpty();
         return createReservationResponse.getBody();
     }

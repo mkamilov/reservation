@@ -47,7 +47,7 @@ public class InMemoryReservationRepository implements ReservationRepository {
 
     @Override
     public ReservationEntity getReservation(final String email, final String reservationId) {
-        if (!reservations.get(reservationId).getEmail().equals(email)) {
+        if (!reservations.containsKey(reservationId) || !reservations.get(reservationId).getEmail().equals(email)) {
             throw new ResourceNotFoundException(String.format("%s does not have %s reservation", email, reservationId));
         }
         return reservations.get(reservationId);

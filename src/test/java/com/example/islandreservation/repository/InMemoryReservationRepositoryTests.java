@@ -15,6 +15,13 @@ public class InMemoryReservationRepositoryTests {
     InMemoryReservationRepository systemUnderTest = new InMemoryReservationRepository();
 
     @Test
+    public void getThrowsExceptionWhenReservationDoesNotExist() {
+        assertThatThrownBy(() -> {
+            systemUnderTest.getReservation("testEmail", "testId");
+        }).isInstanceOf(ResourceNotFoundException.class).hasMessage("testEmail does not have testId reservation");
+    }
+
+    @Test
     public void updatesCreatedReservationWithLessDays() {
         final String reservationId = "testId";
         ReservationEntity reservation = new ReservationEntity(reservationId, "testName", "testEmail",
@@ -43,7 +50,7 @@ public class InMemoryReservationRepositoryTests {
     }
 
     @Test
-    public void updateThrowsExceptionWhen() {
+    public void updateThrowsExceptionWhenEmailDoesNotHaveRervation() {
         final String reservationId2 = "testId2";
         ReservationEntity updatedReservation = new ReservationEntity(reservationId2, "testName2", "testEmail2",
                 LocalDate.parse("2022-09-09"), LocalDate.parse("2022-09-11"));

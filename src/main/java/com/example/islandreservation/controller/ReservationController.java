@@ -67,7 +67,7 @@ public class ReservationController {
         // TODO Use Aspect for validation
         RequestValidator.validateCreateReservationRequest(createReservationRequest);
 
-        return ResponseEntity.ok(reservationService.createReservation(createReservationRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.createReservation(createReservationRequest));
     }
 
     /**
